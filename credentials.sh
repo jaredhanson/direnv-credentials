@@ -6,21 +6,24 @@ echo "hello from credentials"
 
 username () {
   local provider="pass"
-  eval "username_$provider" "$@"
+  eval "${provider}_username" "$@"
 }
 
 password () {
   local provider="pass"
-  eval "password_$provider" "$@"
+  eval "${provider}_password" "$@"
 }
 
 
-password_pass () {
+pass_password () {
+  echo "pass_password ---" >&2
+  
   local out=$(pass show $1)
+  echo "password: $out" >&2
   echo "$out"
 }
 
-username_pass () {
+pass_username () {
   local out=$(pass show $1)
   
   while IFS=';' read -ra ADDR; do

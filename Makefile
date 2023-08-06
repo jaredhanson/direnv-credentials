@@ -9,6 +9,8 @@ all:
 
 install: $(LIBDIR) $(LIBDIR)/credentials.sh
 
+# TODO: add a link target here to symlink for development
+
 clean:
 	$(RM) $(LIBDIR)/credentials.sh
 
