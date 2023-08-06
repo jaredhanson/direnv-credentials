@@ -40,6 +40,24 @@ pass_username () {
     echo "i is $i" >&2
   done
   
+  echo "---" >&2
+  echo "$out" >&2
+  echo "---" >&2
+  
+  while read; do
+    echo "line is $line" >&2
+  done <<< "$out"
+  
+  echo "---2" >&2
+  echo "$out" >&2
+  echo "---2" >&2
+  
+  while IFS=, read -ra arr; do
+    echo "arr is $arr[@]" >&2
+    ## Do something with ${arr0]}, ${arr[1]} and ${arr[2]}
+    #...
+  done <<< "$out"
+  
   
   #while IFS=';' read -ra ADDR; do
   #  echo "$ADDR" >&2
