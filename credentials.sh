@@ -24,48 +24,22 @@ pass_password () {
 }
 
 pass_username () {
-  echo "pass_username ---" >&2
   local out=$(pass show $1)
-  
-  echo "$out" >&2
-  echo "---" >&2
-  
   
   #IFS= read -ra LINES <<< "$out"
   IFS=$'\n' read -d '' -r -a lines <<< "$out"
   
-  echo "${lines[@]}" >&2
-  
-  for i in "${lines[@]}"; do
-    echo "i is $i" >&2
-  done
-  
-  echo "---" >&2
-  echo "$out" >&2
-  echo "---" >&2
-  
-  while read; do
-    echo "line is $line" >&2
-  done <<< "$out"
-  
-  echo "---2" >&2
-  echo "$out" >&2
-  echo "---2" >&2
-  
-  while IFS=, read -ra arr; do
+  while IFS=: read -ra arr; do
     echo "arr is $arr[@]" >&2
-    ## Do something with ${arr0]}, ${arr[1]} and ${arr[2]}
-    #...
+    echo "arr0 is ${arr[0]}" >&2
+    echo "arr1 is ${arr[1]}" >&2
+    
+    # TODO: case insensitive compare
+    if [ ${arr[0]} == "Username" ]; then
+      echo "found username" >&2
+      # TODO: trim whitepace, maybe in IFC read above?
+      echo "${arr[1]}"
+      exit
+    fi
   done <<< "$out"
-  
-  
-  #while IFS=';' read -ra ADDR; do
-  #  echo "$ADDR" >&2
-  #  for i in "${ADDR[@]}"; do
-  #    # process "$i"
-  #    echo "i is $i" >&2
-  #  done
-  #done <<< "$out"
-  
-  echo "todo-username_pass"
 }
