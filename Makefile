@@ -26,3 +26,7 @@ $(LIBCREDDIR):
 
 $(LIBCREDDIR)/pass.sh: credentials/pass.sh
 	cp $< $@
+
+.PHONY: test
+test:
+	bats test/test.bats
