@@ -11,10 +11,8 @@ pass_password () {
   echo "out is $out" >&2
   
   #IFS=$'\n' read -d '' -r -a lines <<< "$out"
-  echo "out2 is $out" >&2
   
   # TODO: Exaport first line as password, only parse subsequent lines for metadata
-  echo "out3 is $out" >&2
   export "${name}_PASSWORD=todo"
   
   while IFS=: read -ra arr; do
@@ -30,6 +28,4 @@ pass_password () {
       export "${name}_USERNAME=${arr[1]}"
     fi
   done <<< "$out"
-  
-  #echo "done"
 }
