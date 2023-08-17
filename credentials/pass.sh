@@ -15,17 +15,15 @@ pass_password () {
   # TODO: Exaport first line as password, only parse subsequent lines for metadata
   export "${name}_PASSWORD=todo"
   
-  while IFS=: read -ra fields; do
-    echo "fields is ${fields[@]}" >&2
-    echo "fields0 is ${fields[0]}" >&2
-    echo "fields1 is ${fields[1]}" >&2
+  while IFS=: read -ra field; do
+    echo "- field: ${field[@]}" >&2
     
     # TODO: set url/location/etc
     # TODO: case insensitive compare
-    if [ ${fields[0]} == "Username" ]; then
+    if [ ${field[0]} == "Username" ]; then
       echo "found username" >&2
       # TODO: trim whitepace, maybe in IFC read above?
-      export "${name}_USERNAME=${fields[1]}"
+      export "${name}_USERNAME=${field[1]}"
     fi
   done <<< "$out"
 }
