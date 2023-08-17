@@ -1,5 +1,3 @@
-echo "Loaded pass lib!"
-
 # Usage: pass_password <name>
 #
 # Decrypts a password using `pass` and sets <NAME>_USERNAME and <NAME>_PASSWORD
