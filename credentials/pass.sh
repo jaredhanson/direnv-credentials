@@ -12,8 +12,12 @@ pass_password () {
   
   #IFS=$'\n' read -d '' -r -a lines <<< "$out"
   
-  # TODO: Exaport first line as password, only parse subsequent lines for metadata
   export "${name}_PASSWORD=todo"
+  
+  read -r password <<< "$out"
+  echo "-* $password" >&2
+  
+  export "${name}_PASSWORD=${password}"
   
   # Split each line of the output into the field and value using colon
   # separator.  Note that the value itself may contain a colon, which should not
