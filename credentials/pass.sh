@@ -15,15 +15,18 @@ pass_password () {
   # TODO: Exaport first line as password, only parse subsequent lines for metadata
   export "${name}_PASSWORD=todo"
   
-  while IFS=: read -ra field; do
-    echo "- field: ${field[@]}" >&2
+  # Split each line of the output into the field and value using colon
+  # separator.  Note that the value itself may contain a colon, which should not
+  # split the value.  Due to that, the `-a` argument is not used to read into
+  # an array.
+  while IFS=: read -r field value; do
+    echo "- ${field}: ${value}" >&2
     
     # TODO: set url/location/etc
     # TODO: case insensitive compare
-    if [ ${field[0]} == "Username" ]; then
-      echo "found username" >&2
+    if [ ${field} == "Username" ]; then
       # TODO: trim whitepace, maybe in IFC read above?
-      export "${name}_USERNAME=${field[1]}"
+      export "${name}_USERNAME=${value}"
     fi
   done <<< "$out"
 }
