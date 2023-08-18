@@ -10,27 +10,23 @@ pass_password () {
   echo "$out" >&2
   echo "==" >&2
   
-  #IFS=$'\n' read -d '' -r -a lines <<< "$out"
-  
-  export "${name}_PASSWORD=todo"
-  
-  read -r password <<< "$out"
-  echo "-* $password" >&2
-  
-  export "${name}_PASSWORD=${password}"
-  
-  # Split each line of the output into the field and value using colon
-  # separator.  Note that the value itself may contain a colon, which should not
-  # split the value.  Due to that, the `-a` argument is not used to read into
-  # an array.
-  while IFS=: read -r field value; do
-    echo "- ${field}: ${value}" >&2
+  {
+    read -r password
+    export "${name}_PASSWORD=${password}"
     
-    # TODO: set url/location/etc
-    # TODO: case insensitive compare
-    if [ ${field} == "Username" ]; then
-      # TODO: trim whitepace, maybe in IFC read above?
-      export "${name}_USERNAME=${value}"
-    fi
-  done <<< "$out"
+    # Split each line of the output into the field and value using colon
+    # separator.  Note that the value itself may contain a colon, which should not
+    # split the value.  Due to that, the `-a` argument is not used to read into
+    # an array.
+    while IFS=: read -r field value; do
+      echo "- ${field}: ${value}" >&2
+    
+      # TODO: set url/location/etc
+      # TODO: case insensitive compare
+      if [ ${field} == "Username" ]; then
+        # TODO: trim whitepace, maybe in IFC read above?
+        export "${name}_USERNAME=${value}"
+      fi
+    done
+  } <<< "$out"
 }
